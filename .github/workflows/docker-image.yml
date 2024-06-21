@@ -26,8 +26,8 @@ jobs:
       uses: docker/build-push-action@v6
       with:
         tags: |
-          ${{ secrets.DOCKER_HUB_USERNAME }}/podinfo:latest
-          ${{ secrets.DOCKER_HUB_USERNAME }}/podinfo:${{ github.sha }}
+          dockingotter1337/podinfo:latest
+          dockingotter1337/podinfo:${{ github.sha }}
 
 
     
