@@ -23,8 +23,8 @@ jobs:
     - name: Build and push the Docker image
       uses: docker/build-push-action@v6
       with:
+        push: true
         tags: |
-          push: true
           dockingotter1337/podinfo:latest
           dockingotter1337/podinfo:${{ github.sha }}
 
