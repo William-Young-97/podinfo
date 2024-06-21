@@ -29,6 +29,7 @@ jobs:
       uses: docker/build-push-action@v6
       with:
         tags: |
+          push: true
           dockingotter1337/podinfo:latest
           dockingotter1337/podinfo:${{ github.sha }}
 
