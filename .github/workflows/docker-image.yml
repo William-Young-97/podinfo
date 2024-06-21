@@ -4,6 +4,10 @@ on:
   workflow_dispatch:
 
 jobs:
+  job_id:
+    permissions:
+      contents: 'read'
+      id-token: 'write'
 
   build:
 
@@ -27,6 +31,32 @@ jobs:
         tags: |
           dockingotter1337/podinfo:latest
           dockingotter1337/podinfo:${{ github.sha }}
+          
+  
+  deploy:
+    
+    runs-on: ubuntu-latest
+    
+    steps:
+    
+    - id: 'auth'
+      uses: 'google-github-actions/auth@v2'
+      with:
+        workload_identity_provider: ${{ secrets.WORKLOAD_ID}}
 
-
+    - name: 'deploy with gke-deploy cli'
+      uses: 'google-github-actions/deploy-gke-container@v0.1'
+      with:
+        image: 'https://hub.docker.com/repository/docker/dockingotter1337/podinfo'
+        app_name: 'podinfo'
+        region: 'europe-west2-a'
+        cluster_name: 'zonal-cluster'
+        project_id: ${{ secrets.GKE_PROJECT }}
+        namespace: 'default'
+        expose: '8000'
+    
+    - name: 'get-deployments'
+      shell: bash
+      run: |
+        kubectl get deployment
     
